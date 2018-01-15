@@ -1,0 +1,4 @@
+<launch>
+  <include file="$(find pimouse_ros)/scripts/pimouse.launch" />
+  <node pkg="braking" name="exam" type="exam.py" required="true" />
+</launch>
