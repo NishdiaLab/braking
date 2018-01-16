@@ -19,11 +19,11 @@ class Braking():
     def run(self):
         rate = rospy.Rate(10)
         data = Twist()
-        buz = UInt16()
+	buz = UInt16()
 
         accel = 0.02
         brake = -0.17
-        data.linear.x = 0.0
+        data.linear.x = 0.00
         while not rospy.is_shutdown():
                 data.linear.x += accel
 
@@ -31,12 +31,14 @@ class Braking():
                         data.linear.x += brake
                         if data.linear.x <= 0.10:
                         	data.linear.x = 0.00
-                        	buz = 1000
-                elif data.linear.x <= 0.20:             data.linear.x = 0.20
+                        	buz = 1200
+                elif data.linear.x <= 0.20:
+                	data.linear.x = 0.20
+                	buz = 0
                 elif data.linear.x >= 0.80:             data.linear.x = 0.80
 
                 self.cmd_vel.publish(data)
-                #self.sound.publish(buz)
+                self.sound.publish(buz)
                 rate.sleep()
 
 if __name__ == '__main__':
