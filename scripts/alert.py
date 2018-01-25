@@ -20,19 +20,19 @@ class Alert():
         buz = UInt16()
         buz = 0
         while not rospy.is_shutdown():
-                while self.sensor_values.sum_all >= 80:
-                	buz = 0
-                	self.alert.publish(buz)
-                	sleep(0.1)
-			buz = 1200
-			self.alert.publish(buz)
-			sleep(0.1)
-                	if self.sensor_values.sum_all >= 200:
-                		break
+	    if  self.sensor_values.sum_forward >= 50:
+		while True:
+		    buz = 0
+		    self.alert.publish(buz)
+		    sleep(0.05)
+		    buz = 1200
+		    self.alert.publish(buz)
+		    sleep(0.05)
+		    if self.sensor_values.sum_forward >= 200:	break
+		    elif self.sensor_values.sum_forward < 50: 	break
                 while self.sensor_values.sum_all >= 200:
-                	buz = 1200
-                	self.alert.publish(buz)
-                	rate.sleep()
+		    buz = 1200
+		    self.alert.publish(buz)
 
                 buz = 0
                 self.alert.publish(buz)
