@@ -15,23 +15,25 @@ class Braking():
 	self.sensor_values = messages
 
     def run(self):
-	rate = rospy.Rate(10)
-	data = Twist()
+        rate = rospy.Rate(10)
+        data = Twist()
 
         accel = 0.02
-        brake = -0.17
-        data.linear.x = 0.0
+        brake = -0.12
+        data.linear.x = 0.00
         while not rospy.is_shutdown():
-        	data.linear.x += accel
+                data.linear.x += accel
 
-        	if self.sensor_values.sum_all >= 80:
-        		data.linear.x += brake
-        		if data.linear.x <= 0.10:	data.linear.x = 0.00
-		elif data.linear.x <= 0.20:		data.linear.x = 0.20
-		elif data.linear.x >= 0.80:		data.linear.x = 0.80
+                if self.sensor_values.sum_all >= 50:
+                    data.linear.x += brake
+                    if data.linear.x <= 0.10:
+                        data.linear.x = 0.10
+                        if self.sensor_values.sum_all >= 500:	data.linear.x = 0.00
+                elif data.linear.x <= 0.20:             data.linear.x = 0.20
+                elif data.linear.x >= 0.80:             data.linear.x = 0.80
 
-		self.cmd_vel.publish(data)
-		rate.sleep()
+                self.cmd_vel.publish(data)
+                rate.sleep()
 
 if __name__ == '__main__':
     rospy.init_node('brake')
