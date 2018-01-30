@@ -29,11 +29,11 @@ class Braking():
         while not rospy.is_shutdown():
 	    data.linear.x += accel
 
-	    if self.sensor_values.sum_forward >= 50:
+	    if self.sensor_values.sum_all >= 50:
 		data.linear.x += brake
 		if data.linear.x <= 0.10:
 		    data.linear.x = 0.10
-		    if self.sensor_values.sum_forward >= 300:	data.linear.x = 0.00
+		    if self.sensor_values.sum_all >= 300:	data.linear.x = 0.00
             elif data.linear.x <= 0.20:             data.linear.x = 0.20
             elif data.linear.x >= 0.80:             data.linear.x = 0.80
 
