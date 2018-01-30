@@ -22,14 +22,14 @@ class Alert():
 	while not rospy.is_shutdown():
 	    if  self.sensor_values.sum_forward >= 50:
 		while not rospy.is_shutdown():
-		buz = 0
-		self.alert.publish(buz)
-		sleep(0.1)
-		buz = 1200
-		self.alert.publish(buz)
-		sleep(0.1)
-		if self.sensor_values.sum_forward >= 200:   break
-		elif self.sensor_values.sum_forward < 50:   break
+		    buz = 0
+		    self.alert.publish(buz)
+		    sleep(0.1)
+		    buz = 1200
+		    self.alert.publish(buz)
+		    sleep(0.1)
+		    if self.sensor_values.sum_forward >= 200:   break
+		    elif self.sensor_values.sum_forward < 50:   break
 	    if  self.sensor_values.sum_all >= 200:
 		buz = 1200
 		self.alert.publish(buz)
