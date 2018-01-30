@@ -6,7 +6,7 @@ from std_msgs.msg import UInt16
 
 class Alert():
     def __init__(self):
-	self.alert = rospy.Publisher('/buzzer',UInt16,queue_size=1)
+	self.alert = rospy.Publisher('/buzzer',UInt16,queue_size=100)
 
 	self.sensor_values = LightSensorValues()
 	rospy.Subscriber('/lightsensors', LightSensorValues, self.callback)
@@ -15,7 +15,6 @@ class Alert():
 	self.sensor_values = messages
 
     def sound(self):
-	rate = rospy.Rate(10)
 
 	buz = UInt16()
 	buz = 0
@@ -42,7 +41,7 @@ class Alert():
 
 	    buz = 0
 	    self.alert.publish(buz)
-	    rate.sleep()
+	    sleep(0.01)
 
 if __name__ == '__main__':
     rospy.init_node('alert')
