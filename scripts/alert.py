@@ -9,7 +9,7 @@ class Alert():
 	self.alert = rospy.Publisher('/buzzer',UInt16,queue_size=100)
 
 	self.sensor_values = LightSensorValues()
-	rospy.Subscriber('LiSe02', LightSensorValues, self.callback)
+	rospy.Subscriber('lightsensors', LightSensorValues, self.callback)
 
     def callback(self,messages):
 	self.sensor_values = messages
@@ -29,11 +29,11 @@ class Alert():
 		    sleep(0.1)
 		    if self.sensor_values.sum_forward >= 200:   break
 		    elif self.sensor_values.sum_forward < 50:   break
-	    if  self.sensor_values.sum_all >= 200:
+	    if self.sensor_values.sum_all >= 200:
 		buz = 1200
 		self.alert.publish(buz)
 		sleep(1)
-		while not rospy.is_shutdown() and self.sensor_values.sum_all >= 200:
+		while not rospy.is_shutdown():
 		    buz = 0
 		    self.alert.publish(buz)
 		    sleep(0.1)
