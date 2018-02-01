@@ -9,7 +9,7 @@ class Alert():
 	self.alert = rospy.Publisher('/buzzer',UInt16,queue_size=100)
 
 	self.sensor_values = LightSensorValues()
-	rospy.Subscriber('/lightsensors', LightSensorValues, self.callback)
+	rospy.Subscriber('LiSe02', LightSensorValues, self.callback)
 
     def callback(self,messages):
 	self.sensor_values = messages
